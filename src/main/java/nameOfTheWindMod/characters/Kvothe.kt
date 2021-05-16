@@ -45,7 +45,7 @@ class Kvothe(name: String?, setClass: PlayerClass?) : CustomPlayer(
     object Enums {
         @JvmField
         @SpireEnum
-        var THE_DEFAULT: PlayerClass? = null
+        var KVOTHE: PlayerClass? = null
 
         @JvmField
         @SpireEnum(name = "DEFAULT_GRAY_COLOR") // These two HAVE to have the same absolutely identical name.
@@ -69,7 +69,6 @@ class Kvothe(name: String?, setClass: PlayerClass?) : CustomPlayer(
     override fun getStartingDeck(): ArrayList<String> {
         val retVal = ArrayList<String>()
         logger.info("Begin loading starter Deck Strings")
-        logger.info("Found cards: " + CardLibrary.getAllCards())
         retVal.add(DefaultCommonAttack.ID)
         retVal.add(DefaultUncommonAttack.ID)
         retVal.add(DefaultRareAttack.ID)

@@ -14,7 +14,6 @@ import com.megacrit.cardcrawl.dungeons.TheCity
 import com.megacrit.cardcrawl.helpers.CardHelper
 import com.megacrit.cardcrawl.helpers.FontHelper
 import com.megacrit.cardcrawl.localization.*
-import com.megacrit.cardcrawl.unlock.UnlockTracker
 import nameOfTheWindMod.cards.AbstractDefaultCard
 import nameOfTheWindMod.characters.Kvothe
 import nameOfTheWindMod.events.IdentityCrisisEvent
@@ -37,13 +36,13 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
     // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
     // =============== LOAD THE CHARACTER =================
     override fun receiveEditCharacters() {
-        logger.info("Beginning to edit characters. " + "Add " + Kvothe.Enums.THE_DEFAULT.toString())
+        logger.info("Beginning to edit characters. " + "Add " + Kvothe.Enums.KVOTHE.toString())
         BaseMod.addCharacter(
-            Kvothe("Kvothe", Kvothe.Enums.THE_DEFAULT),
-            THE_DEFAULT_BUTTON, THE_DEFAULT_PORTRAIT, Kvothe.Enums.THE_DEFAULT
+            Kvothe("Kvothe", Kvothe.Enums.KVOTHE),
+            THE_DEFAULT_BUTTON, THE_DEFAULT_PORTRAIT, Kvothe.Enums.KVOTHE
         )
         receiveEditPotions()
-        logger.info("Added " + Kvothe.Enums.THE_DEFAULT.toString())
+        logger.info("Added " + Kvothe.Enums.KVOTHE.toString())
     }
 
     // =============== /LOAD THE CHARACTER/ =================
@@ -99,7 +98,7 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         val eventParams =
             AddEventParams.Builder(IdentityCrisisEvent.ID, IdentityCrisisEvent::class.java) // for this specific event
                 .dungeonID(TheCity.ID) // The dungeon (act) this event will appear in
-                .playerClass(Kvothe.Enums.THE_DEFAULT) // Character specific event
+                .playerClass(Kvothe.Enums.KVOTHE) // Character specific event
                 .create()
 
         // Add the event
@@ -123,7 +122,7 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
             PLACEHOLDER_POTION_HYBRID,
             PLACEHOLDER_POTION_SPOTS,
             PlaceholderPotion.POTION_ID,
-            Kvothe.Enums.THE_DEFAULT
+            Kvothe.Enums.KVOTHE
         )
         logger.info("Done editing potions")
     }
@@ -176,54 +175,72 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         logger.info("Done adding cards!")
     }
 
+    private fun getLocCode(): String {
+        return when (Settings.language) {
+            Settings.GameLanguage.RUS -> {
+                "rus"
+            }
+            else -> {
+                "eng"
+            }
+        }
+    }
+
     // ================ /ADD CARDS/ ===================
     // ================ LOAD THE TEXT ===================
     override fun receiveEditStrings() {
         logger.info("You seeing this?")
-        logger.info("Beginning to edit strings for mod with ID: " + _modID)
+        logger.info("Beginning to edit strings for mod with ID: $_modID")
+
+        loadCustomStrings("eng")
+        loadCustomStrings(getLocCode())
+
+        logger.info("Done editing strings")
+    }
+
+    private fun loadCustomStrings(loc: String) {
 
         // CardStrings
         BaseMod.loadCustomStringsFile(
             CardStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Card-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Card-Strings.json"
         )
 
         // PowerStrings
         BaseMod.loadCustomStringsFile(
             PowerStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Power-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Power-Strings.json"
         )
 
         // RelicStrings
         BaseMod.loadCustomStringsFile(
             RelicStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Relic-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Relic-Strings.json"
         )
 
         // Event Strings
         BaseMod.loadCustomStringsFile(
             EventStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Event-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Event-Strings.json"
         )
 
         // PotionStrings
         BaseMod.loadCustomStringsFile(
             PotionStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Potion-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Potion-Strings.json"
         )
 
         // CharacterStrings
         BaseMod.loadCustomStringsFile(
             CharacterStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Character-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Character-Strings.json"
         )
 
         // OrbStrings
         BaseMod.loadCustomStringsFile(
             OrbStrings::class.java,
-            _modID + "Resources/localization/eng/DefaultMod-Orb-Strings.json"
+            _modID + "Resources/localization/$loc/DefaultMod-Orb-Strings.json"
         )
-        logger.info("Done edittting strings")
     }
 
     // ================ /LOAD THE TEXT/ ===================

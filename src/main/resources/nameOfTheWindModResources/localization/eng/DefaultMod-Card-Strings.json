@@ -49,5 +49,17 @@
   "nameOfTheWindMod:OrbSkill": {
     "NAME": "Get Orb",
     "DESCRIPTION": "Channel 1 Default Orb."
+  },
+  "nameOfTheWindMod:ChaelSkill": {
+    "NAME": "Chael",
+    "DESCRIPTION": "Add Finol to the deck"
+  },
+  "nameOfTheWindMod:FinolSkill": {
+    "NAME": "Finol",
+    "DESCRIPTION": "Add Saikere to the deck"
+  },
+  "nameOfTheWindMod:SaikereAttack": {
+    "NAME": "Saikere",
+    "DESCRIPTION": "Deal !D! damage"
   }
 }

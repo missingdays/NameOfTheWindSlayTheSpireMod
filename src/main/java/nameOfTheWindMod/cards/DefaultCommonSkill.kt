@@ -9,7 +9,7 @@ import nameOfTheWindMod.characters.Kvothe
 
 class DefaultCommonSkill : AbstractDynamicCard(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET) {
     // Actions the card should do.
-    override fun use(p: AbstractPlayer, m: AbstractMonster) {
+    override fun use(p: AbstractPlayer, m: AbstractMonster?) {
         AbstractDungeon.actionManager.addToBottom(GainBlockAction(p, p, block))
     }
 

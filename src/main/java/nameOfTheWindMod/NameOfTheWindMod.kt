@@ -19,7 +19,6 @@ import nameOfTheWindMod.cards.AbstractDefaultCard
 import nameOfTheWindMod.characters.Kvothe
 import nameOfTheWindMod.events.IdentityCrisisEvent
 import nameOfTheWindMod.potions.PlaceholderPotion
-import nameOfTheWindMod.relics.BottledPlaceholderRelic
 import nameOfTheWindMod.relics.DefaultClickableRelic
 import nameOfTheWindMod.relics.PlaceholderRelic
 import nameOfTheWindMod.relics.PlaceholderRelic2
@@ -32,18 +31,6 @@ import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 import java.util.*
 
-/*
-* With that out of the way:
-* Welcome to this super over-commented Slay the Spire modding base.
-* Use it to make your own mod of any type. - If you want to add any standard in-game content (character,
-* cards, relics), this is a good starting point.
-* It features 1 character with a minimal set of things: 1 card of each type, 1 debuff, couple of relics, etc.
-* If you're new to modding, you basically *need* the BaseMod wiki for whatever you wish to add
-* https://github.com/daviscook477/BaseMod/wiki - work your way through with this base.
-* Feel free to use this in any way you like, of course. MIT licence applies. Happy modding!
-*
-* And pls. Read the comments.
-*/
 @SpireInitializer
 class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsSubscriber, EditKeywordsSubscriber,
     EditCharactersSubscriber, PostInitializeSubscriber {
@@ -155,7 +142,6 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
 
         // This adds a character specific relic. Only when you play with the mentioned color, will you get this relic.
         BaseMod.addRelicToCustomPool(PlaceholderRelic(), Kvothe.Enums.COLOR_GRAY)
-        BaseMod.addRelicToCustomPool(BottledPlaceholderRelic(), Kvothe.Enums.COLOR_GRAY)
         BaseMod.addRelicToCustomPool(DefaultClickableRelic(), Kvothe.Enums.COLOR_GRAY)
 
         // This adds a relic to the Shared pool. Every character can find this relic.
@@ -164,7 +150,6 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         // Mark relics as seen - makes it visible in the compendium immediately
         // If you don't have this it won't be visible in the compendium until you see them in game
         // (the others are all starters so they're marked as seen in the character file)
-        UnlockTracker.markRelicAsSeen(BottledPlaceholderRelic.ID)
         logger.info("Done adding relics!")
     }
 
@@ -195,48 +180,48 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
     // ================ LOAD THE TEXT ===================
     override fun receiveEditStrings() {
         logger.info("You seeing this?")
-        logger.info("Beginning to edit strings for mod with ID: " + modID)
+        logger.info("Beginning to edit strings for mod with ID: " + _modID)
 
         // CardStrings
         BaseMod.loadCustomStringsFile(
             CardStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Card-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Card-Strings.json"
         )
 
         // PowerStrings
         BaseMod.loadCustomStringsFile(
             PowerStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Power-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Power-Strings.json"
         )
 
         // RelicStrings
         BaseMod.loadCustomStringsFile(
             RelicStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Relic-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Relic-Strings.json"
         )
 
         // Event Strings
         BaseMod.loadCustomStringsFile(
             EventStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Event-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Event-Strings.json"
         )
 
         // PotionStrings
         BaseMod.loadCustomStringsFile(
             PotionStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Potion-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Potion-Strings.json"
         )
 
         // CharacterStrings
         BaseMod.loadCustomStringsFile(
             CharacterStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Character-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Character-Strings.json"
         )
 
         // OrbStrings
         BaseMod.loadCustomStringsFile(
             OrbStrings::class.java,
-            modID + "Resources/localization/eng/DefaultMod-Orb-Strings.json"
+            _modID + "Resources/localization/eng/DefaultMod-Orb-Strings.json"
         )
         logger.info("Done edittting strings")
     }
@@ -252,13 +237,13 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         // That is, in Card-Strings.json you would have #yA_Long_Keyword (#y highlights the keyword in yellow).
         // In Keyword-Strings.json you would have PROPER_NAME as A Long Keyword and the first element in NAMES be a long keyword, and the second element be a_long_keyword
         val gson = Gson()
-        val json = Gdx.files.internal(modID + "Resources/localization/eng/DefaultMod-Keyword-Strings.json").readString(
+        val json = Gdx.files.internal(_modID + "Resources/localization/eng/DefaultMod-Keyword-Strings.json").readString(
             StandardCharsets.UTF_8.toString()
         )
         val keywords = gson.fromJson(json, Array<Keyword>::class.java)
         if (keywords != null) {
             for (keyword in keywords) {
-                BaseMod.addKeyword(modID!!.toLowerCase(), keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION)
+                BaseMod.addKeyword(_modID!!.toLowerCase(), keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION)
                 //  getModID().toLowerCase() makes your keyword mod specific (it won't show up in other cards that use that word)
             }
         }
@@ -272,7 +257,7 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         // NO
         // DOUBLE NO
         // NU-UH
-        var modID: String? = null
+        var _modID: String? = null
             private set
 
         // Mod-settings settings. This is if you want an on/off savable button
@@ -327,27 +312,27 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
 
         // =============== MAKE IMAGE PATHS =================
         fun makeCardPath(resourcePath: String): String {
-            return modID + "Resources/images/cards/" + resourcePath
+            return _modID + "Resources/images/cards/" + resourcePath
         }
 
         fun makeRelicPath(resourcePath: String): String {
-            return modID + "Resources/images/relics/" + resourcePath
+            return _modID + "Resources/images/relics/" + resourcePath
         }
 
         fun makeRelicOutlinePath(resourcePath: String): String {
-            return modID + "Resources/images/relics/outline/" + resourcePath
+            return _modID + "Resources/images/relics/outline/" + resourcePath
         }
 
         fun makeOrbPath(resourcePath: String): String {
-            return modID + "Resources/images/orbs/" + resourcePath
+            return _modID + "Resources/images/orbs/" + resourcePath
         }
 
         fun makePowerPath(resourcePath: String): String {
-            return modID + "Resources/images/powers/" + resourcePath
+            return _modID + "Resources/images/powers/" + resourcePath
         }
 
         fun makeEventPath(resourcePath: String): String {
-            return modID + "Resources/images/events/" + resourcePath
+            return _modID + "Resources/images/events/" + resourcePath
         }
 
         // ====== NO EDIT AREA ======
@@ -366,11 +351,11 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
             if (ID == EXCEPTION_STRINGS.DEFAULTID) { // DO *NOT* CHANGE THIS ESPECIALLY, TO EDIT YOUR MOD ID, SCROLL UP JUST A LITTLE, IT'S JUST ABOVE
                 throw RuntimeException(EXCEPTION_STRINGS.EXCEPTION) // THIS ALSO DON'T EDIT
             } else if (ID == EXCEPTION_STRINGS.DEVID) { // NO
-                modID = EXCEPTION_STRINGS.DEFAULTID // DON'T
+                _modID = EXCEPTION_STRINGS.DEFAULTID // DON'T
             } else { // NO EDIT AREA
-                modID = ID // DON'T WRITE OR CHANGE THINGS HERE NOT EVEN A LITTLE
+                _modID = ID // DON'T WRITE OR CHANGE THINGS HERE NOT EVEN A LITTLE
             } // NO
-            logger.info("Success! ID is " + modID) // WHY WOULD U WANT IT NOT TO LOG?? DON'T EDIT THIS.
+            logger.info("Success! ID is " + _modID) // WHY WOULD U WANT IT NOT TO LOG?? DON'T EDIT THIS.
         } // NO
 
         private fun pathCheck() { // ALSO NO
@@ -383,18 +368,18 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
                 IDCheckDontTouchPls::class.java
             ) // NAH, NO EDIT
             val packageName = NameOfTheWindMod::class.java.getPackage().name // STILL NO EDIT ZONE
-            val resourcePathExists = Gdx.files.internal(modID + "Resources") // PLEASE DON'T EDIT THINGS HERE, THANKS
-            if (modID != EXCEPTION_STRINGS.DEVID) { // LEAVE THIS EDIT-LESS
-                if (packageName != modID) { // NOT HERE ETHER
-                    throw RuntimeException(EXCEPTION_STRINGS.PACKAGE_EXCEPTION + modID) // THIS IS A NO-NO
+            val resourcePathExists = Gdx.files.internal(_modID + "Resources") // PLEASE DON'T EDIT THINGS HERE, THANKS
+            if (_modID != EXCEPTION_STRINGS.DEVID) { // LEAVE THIS EDIT-LESS
+                if (packageName != _modID) { // NOT HERE ETHER
+                    throw RuntimeException(EXCEPTION_STRINGS.PACKAGE_EXCEPTION + _modID) // THIS IS A NO-NO
                 } // WHY WOULD U EDIT THIS
                 if (!resourcePathExists.exists()) { // DON'T CHANGE THIS
-                    throw RuntimeException(EXCEPTION_STRINGS.RESOURCE_FOLDER_EXCEPTION + modID + "Resources") // NOT THIS
+                    throw RuntimeException(EXCEPTION_STRINGS.RESOURCE_FOLDER_EXCEPTION + _modID + "Resources") // NOT THIS
                 } // NO
             } // NO
         } // NO
 
-        // ====== YOU CAN EDIT AGAIN ======
+        @JvmStatic
         fun initialize() {
             logger.info("========================= Initializing Name of the Wind mod =========================")
             val nameOfTheWindMod = NameOfTheWindMod()
@@ -405,7 +390,7 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         // this adds "ModName:" before the ID of any card/relic/power etc.
         // in order to avoid conflicts if any other mod uses the same ID.
         fun makeID(idText: String): String {
-            return modID + ":" + idText
+            return _modID + ":" + idText
         }
     }
 
@@ -415,16 +400,7 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
     init {
         logger.info("Subscribe to BaseMod hooks")
         BaseMod.subscribe(this)
-
-        /*
-           (   ( /(  (     ( /( (            (  `   ( /( )\ )    )\ ))\ )
-           )\  )\()) )\    )\()))\ )   (     )\))(  )\()|()/(   (()/(()/(
-         (((_)((_)((((_)( ((_)\(()/(   )\   ((_)()\((_)\ /(_))   /(_))(_))
-         )\___ _((_)\ _ )\ _((_)/(_))_((_)  (_()((_) ((_|_))_  _(_))(_))_
-        ((/ __| || (_)_\(_) \| |/ __| __| |  \/  |/ _ \|   \  |_ _||   (_)
-         | (__| __ |/ _ \ | .` | (_ | _|  | |\/| | (_) | |) |  | | | |) |
-          \___|_||_/_/ \_\|_|\_|\___|___| |_|  |_|\___/|___/  |___||___(_)
-      */setModID("nameOfTheWindMod")
+        setModID("nameOfTheWindMod")
         logger.info("Done subscribing")
         logger.info("Creating the color " + Kvothe.Enums.COLOR_GRAY.toString())
         BaseMod.addColor(

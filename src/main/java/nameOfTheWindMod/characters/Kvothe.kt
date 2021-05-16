@@ -74,6 +74,7 @@ class Kvothe(name: String?, setClass: PlayerClass?) : CustomPlayer(
         retVal.add(DefaultUncommonAttack.ID)
         retVal.add(DefaultRareAttack.ID)
         retVal.add(DefaultCommonSkill.ID)
+        retVal.add(ChaelSkill.ID)
         retVal.add(DefaultUncommonSkill.ID)
         retVal.add(DefaultRareSkill.ID)
         retVal.add(DefaultCommonPower.ID)

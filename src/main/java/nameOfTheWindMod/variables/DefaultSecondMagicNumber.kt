@@ -1,41 +1,32 @@
-package nameOfTheWindMod.variables;
+package nameOfTheWindMod.variables
 
-import basemod.abstracts.DynamicVariable;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import nameOfTheWindMod.cards.AbstractDefaultCard;
+import basemod.abstracts.DynamicVariable
+import com.megacrit.cardcrawl.cards.AbstractCard
+import nameOfTheWindMod.NameOfTheWindMod
+import nameOfTheWindMod.cards.AbstractDefaultCard
 
-import static nameOfTheWindMod.NameOfTheWindMod.makeID;
-
-public class DefaultSecondMagicNumber extends DynamicVariable {
-
+class DefaultSecondMagicNumber : DynamicVariable() {
     //For in-depth comments, check the other variable(DefaultCustomVariable). It's nearly identical.
-
-    @Override
-    public String key() {
-        return makeID("SecondMagic");
+    override fun key(): String {
+        return NameOfTheWindMod.makeID("SecondMagic")
         // This is what you put between "!!" in your card strings to actually display the number.
         // You can name this anything (no spaces), but please pre-phase it with your mod name as otherwise mod conflicts can occur.
         // Remember, we're using makeID so it automatically puts "theDefault:" (or, your id) before the name.
     }
 
-    @Override
-    public boolean isModified(AbstractCard card) {
-        return ((AbstractDefaultCard) card).isDefaultSecondMagicNumberModified;
-
+    override fun isModified(card: AbstractCard): Boolean {
+        return (card as AbstractDefaultCard).isDefaultSecondMagicNumberModified
     }
 
-    @Override
-    public int value(AbstractCard card) {
-        return ((AbstractDefaultCard) card).defaultSecondMagicNumber;
+    override fun value(card: AbstractCard): Int {
+        return (card as AbstractDefaultCard).defaultSecondMagicNumber
     }
 
-    @Override
-    public int baseValue(AbstractCard card) {
-        return ((AbstractDefaultCard) card).defaultBaseSecondMagicNumber;
+    override fun baseValue(card: AbstractCard): Int {
+        return (card as AbstractDefaultCard).defaultBaseSecondMagicNumber
     }
 
-    @Override
-    public boolean upgraded(AbstractCard card) {
-        return ((AbstractDefaultCard) card).upgradedDefaultSecondMagicNumber;
+    override fun upgraded(card: AbstractCard): Boolean {
+        return (card as AbstractDefaultCard).upgradedDefaultSecondMagicNumber
     }
 }

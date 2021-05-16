@@ -1,76 +1,68 @@
-package nameOfTheWindMod.cards;
+package nameOfTheWindMod.cards
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-import nameOfTheWindMod.NameOfTheWindMod;
-import nameOfTheWindMod.characters.Kvothe;
+import com.megacrit.cardcrawl.actions.AbstractGameAction
+import com.megacrit.cardcrawl.actions.common.DamageAction
+import com.megacrit.cardcrawl.cards.DamageInfo
+import com.megacrit.cardcrawl.characters.AbstractPlayer
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
+import com.megacrit.cardcrawl.monsters.AbstractMonster
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel
+import nameOfTheWindMod.NameOfTheWindMod
+import nameOfTheWindMod.characters.Kvothe
 
-import static nameOfTheWindMod.NameOfTheWindMod.makeCardPath;
-
-public class DefaultAttackWithVariable extends AbstractDynamicCard {
-
-    /*
-     * Wiki-page: https://github.com/daviscook477/BaseMod/wiki/Custom-Cards
-     *
-     * Special Strike: Deal 7 (*) damage times the energy you currently have.
-     */
-
-    // TEXT DECLARATION
-
-    public static final String ID = NameOfTheWindMod.makeID(DefaultAttackWithVariable.class.getSimpleName());
-    public static final String IMG = makeCardPath("Attack.png");
-
-    // /TEXT DECLARATION/
-
-
-    // STAT DECLARATION
-
-    private static final CardRarity RARITY = CardRarity.COMMON;
-    private static final CardTarget TARGET = CardTarget.ENEMY;
-    private static final CardType TYPE = CardType.ATTACK;
-    public static final CardColor COLOR = Kvothe.Enums.COLOR_GRAY;
-
-    private static final int COST = 1;
-    private static final int DAMAGE = 7;
-    private static final int UPGRADE_PLUS_DMG = 1;
-
-    public int specialDamage;
-
-    // /STAT DECLARATION/
-
-    public DefaultAttackWithVariable() {
-        super(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET);
-        baseDamage = DAMAGE;
-
-        isMultiDamage = true;
-    }
+class DefaultAttackWithVariable : AbstractDynamicCard(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET) {
+    var specialDamage = 0
 
     // Actions the card should do.
-    @Override
-    public void use(AbstractPlayer p, AbstractMonster m) {
+    override fun use(p: AbstractPlayer, m: AbstractMonster) {
         // Create an int which equals to your current energy.
-        int effect = EnergyPanel.totalCount;
+        val effect = EnergyPanel.totalCount
 
         // For each energy, create 1 damage action.
-        for (int i = 0; i < effect; i++) {
+        for (i in 0 until effect) {
             AbstractDungeon.actionManager.addToBottom(
-                    new DamageAction(m, new DamageInfo(p, damage, damageTypeForTurn),
-                            AbstractGameAction.AttackEffect.FIRE));
+                DamageAction(
+                    m, DamageInfo(p, damage, damageTypeForTurn),
+                    AbstractGameAction.AttackEffect.FIRE
+                )
+            )
         }
     }
 
     // Upgraded stats.
-    @Override
-    public void upgrade() {
+    override fun upgrade() {
         if (!upgraded) {
-            upgradeName();
-            upgradeDamage(UPGRADE_PLUS_DMG);
-            initializeDescription();
+            upgradeName()
+            upgradeDamage(UPGRADE_PLUS_DMG)
+            initializeDescription()
         }
+    }
+
+    companion object {
+        /*
+     * Wiki-page: https://github.com/daviscook477/BaseMod/wiki/Custom-Cards
+     *
+     * Special Strike: Deal 7 (*) damage times the energy you currently have.
+     */
+        // TEXT DECLARATION
+        @JvmField
+        val ID = NameOfTheWindMod.makeID(DefaultAttackWithVariable::class.java.simpleName)
+        val IMG = NameOfTheWindMod.makeCardPath("Attack.png")
+
+        // /TEXT DECLARATION/
+        // STAT DECLARATION
+        private val RARITY = CardRarity.COMMON
+        private val TARGET = CardTarget.ENEMY
+        private val TYPE = CardType.ATTACK
+        val COLOR = Kvothe.Enums.COLOR_GRAY
+        private const val COST = 1
+        private const val DAMAGE = 7
+        private const val UPGRADE_PLUS_DMG = 1
+    }
+
+    // /STAT DECLARATION/
+    init {
+        baseDamage = DAMAGE
+        isMultiDamage = true
     }
 }

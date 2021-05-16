@@ -1,19 +1,37 @@
-package nameOfTheWindMod.cards;
+package nameOfTheWindMod.cards
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.PoisonPower;
-import com.megacrit.cardcrawl.powers.VulnerablePower;
-import nameOfTheWindMod.NameOfTheWindMod;
-import nameOfTheWindMod.characters.Kvothe;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction
+import com.megacrit.cardcrawl.characters.AbstractPlayer
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
+import com.megacrit.cardcrawl.monsters.AbstractMonster
+import com.megacrit.cardcrawl.powers.PoisonPower
+import com.megacrit.cardcrawl.powers.VulnerablePower
+import nameOfTheWindMod.NameOfTheWindMod
+import nameOfTheWindMod.characters.Kvothe
 
-import static nameOfTheWindMod.NameOfTheWindMod.makeCardPath;
+class DefaultSecondMagicNumberSkill : AbstractDynamicCard(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET) {
+    // Actions the card should do.
+    override fun use(p: AbstractPlayer, m: AbstractMonster) {
+        AbstractDungeon.actionManager.addToBottom(
+            ApplyPowerAction(m, p, VulnerablePower(m, magicNumber, false), magicNumber)
+        )
+        AbstractDungeon.actionManager.addToBottom(
+            ApplyPowerAction(m, p, PoisonPower(m, p, defaultSecondMagicNumber), defaultSecondMagicNumber)
+        )
+    }
 
-public class DefaultSecondMagicNumberSkill extends AbstractDynamicCard {
+    // Upgraded stats.
+    override fun upgrade() {
+        if (!upgraded) {
+            upgradeName()
+            upgradeMagicNumber(UPGRADE_PLUS_VULNERABLE)
+            upgradeDefaultSecondMagicNumber(UPGRADE_PLUS_POISON)
+            initializeDescription()
+        }
+    }
 
-    /*
+    companion object {
+        /*
      * Wiki-page: https://github.com/daviscook477/BaseMod/wiki/Custom-Cards
      *
      * Using the second magic number isn't very confusing, you just declare and use it the absolutely the same way you would your
@@ -26,59 +44,29 @@ public class DefaultSecondMagicNumberSkill extends AbstractDynamicCard {
      *
      * Apply 2(5) vulnerable and 4(9) poison to an enemy.
      */
+        // TEXT DECLARATION
+        @JvmField
+        val ID = NameOfTheWindMod.makeID(DefaultSecondMagicNumberSkill::class.java.simpleName)
+        val IMG = NameOfTheWindMod.makeCardPath("Skill.png")
 
-    // TEXT DECLARATION
-
-    public static final String ID = NameOfTheWindMod.makeID(DefaultSecondMagicNumberSkill.class.getSimpleName());
-    public static final String IMG = makeCardPath("Skill.png");
-
-    // /TEXT DECLARATION/
-
-
-    // STAT DECLARATION
-
-    private static final CardRarity RARITY = CardRarity.COMMON;
-    private static final CardTarget TARGET = CardTarget.ENEMY;
-    private static final CardType TYPE = CardType.SKILL;
-    public static final CardColor COLOR = Kvothe.Enums.COLOR_GRAY;
-
-    private static final int COST = 1;
-
-    private static final int VULNERABLE = 2;
-    private static final int UPGRADE_PLUS_VULNERABLE = 3;
-
-    private static final int POISON = 4;
-    private static final int UPGRADE_PLUS_POISON = 5;
+        // /TEXT DECLARATION/
+        // STAT DECLARATION
+        private val RARITY = CardRarity.COMMON
+        private val TARGET = CardTarget.ENEMY
+        private val TYPE = CardType.SKILL
+        val COLOR = Kvothe.Enums.COLOR_GRAY
+        private const val COST = 1
+        private const val VULNERABLE = 2
+        private const val UPGRADE_PLUS_VULNERABLE = 3
+        private const val POISON = 4
+        private const val UPGRADE_PLUS_POISON = 5
+    }
 
     // /STAT DECLARATION/
-
-    public DefaultSecondMagicNumberSkill() {
-        super(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET);
-
-        magicNumber = baseMagicNumber = VULNERABLE;
-        defaultSecondMagicNumber = defaultBaseSecondMagicNumber = POISON;
-
-    }
-
-    // Actions the card should do.
-    @Override
-    public void use(AbstractPlayer p, AbstractMonster m) {
-        AbstractDungeon.actionManager.addToBottom(
-                new ApplyPowerAction(m, p, new VulnerablePower(m, magicNumber, false), this.magicNumber));
-
-        AbstractDungeon.actionManager.addToBottom(
-                new ApplyPowerAction(m, p, new PoisonPower(m, p, this.defaultSecondMagicNumber), this.defaultSecondMagicNumber));
-
-    }
-
-    // Upgraded stats.
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(UPGRADE_PLUS_VULNERABLE);
-            this.upgradeDefaultSecondMagicNumber(UPGRADE_PLUS_POISON);
-            this.initializeDescription();
-        }
+    init {
+        baseMagicNumber = VULNERABLE
+        magicNumber = baseMagicNumber
+        defaultBaseSecondMagicNumber = POISON
+        defaultSecondMagicNumber = defaultBaseSecondMagicNumber
     }
 }

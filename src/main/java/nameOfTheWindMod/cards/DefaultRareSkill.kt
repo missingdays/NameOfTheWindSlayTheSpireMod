@@ -1,78 +1,68 @@
-package nameOfTheWindMod.cards;
+package nameOfTheWindMod.cards
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.VulnerablePower;
-import nameOfTheWindMod.NameOfTheWindMod;
-import nameOfTheWindMod.characters.Kvothe;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction
+import com.megacrit.cardcrawl.characters.AbstractPlayer
+import com.megacrit.cardcrawl.core.CardCrawlGame
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon
+import com.megacrit.cardcrawl.monsters.AbstractMonster
+import com.megacrit.cardcrawl.powers.VulnerablePower
+import nameOfTheWindMod.NameOfTheWindMod
+import nameOfTheWindMod.characters.Kvothe
 
-import static nameOfTheWindMod.NameOfTheWindMod.makeCardPath;
+class DefaultRareSkill : AbstractDynamicCard(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET) {
+    private var TIMES = 2
+    private val UPGRADE_TIMES = 3
+    private val AMOUNT = 1
 
-public class DefaultRareSkill extends AbstractDynamicCard {
+    // Actions the card should do.
+    override fun use(p: AbstractPlayer, m: AbstractMonster) {
+        for (i in 0 until TIMES) {
+            for (mo in AbstractDungeon.getCurrRoom().monsters.monsters) {
+                AbstractDungeon.actionManager.addToBottom(
+                    ApplyPowerAction(
+                        mo, p,
+                        VulnerablePower(mo, magicNumber, false), magicNumber
+                    )
+                )
+            }
+        }
+    }
 
-    /*
+    //Upgraded stats.
+    override fun upgrade() {
+        if (!upgraded) {
+            upgradeName()
+            rawDescription = UPGRADE_DESCRIPTION
+            TIMES = UPGRADE_TIMES
+            initializeDescription()
+        }
+    }
+
+    companion object {
+        /*
      * Wiki-page: https://github.com/daviscook477/BaseMod/wiki/Custom-Cards
      *
      * For Each Loop x2" "Apply 1 Vulnerable to all enemies, 2(3) times.
      */
+        // TEXT DECLARATION 
+        @JvmField
+        val ID = NameOfTheWindMod.makeID(DefaultRareSkill::class.java.simpleName)
+        val IMG = NameOfTheWindMod.makeCardPath("Skill.png")
+        private val cardStrings = CardCrawlGame.languagePack.getCardStrings(ID)
+        val UPGRADE_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION
 
-    // TEXT DECLARATION 
-
-    public static final String ID = NameOfTheWindMod.makeID(DefaultRareSkill.class.getSimpleName());
-    public static final String IMG = makeCardPath("Skill.png");
-
-    private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
-    public static final String UPGRADE_DESCRIPTION = cardStrings.UPGRADE_DESCRIPTION;
-
-    // /TEXT DECLARATION/
-
-    
-    // STAT DECLARATION 	
-
-    private static final CardRarity RARITY = CardRarity.RARE;
-    private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
-    private static final CardType TYPE = CardType.SKILL;
-    public static final CardColor COLOR = Kvothe.Enums.COLOR_GRAY;
-
-    private static final int COST = 1;
-
-    private int TIMES = 2;
-    private final int UPGRADE_TIMES = 3;
-
-    private int AMOUNT = 1;
+        // /TEXT DECLARATION/
+        // STAT DECLARATION 	
+        private val RARITY = CardRarity.RARE
+        private val TARGET = CardTarget.ALL_ENEMY
+        private val TYPE = CardType.SKILL
+        val COLOR = Kvothe.Enums.COLOR_GRAY
+        private const val COST = 1
+    }
 
     // /STAT DECLARATION/
-
-    
-    public DefaultRareSkill() {
-        super(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET);
-        baseMagicNumber = magicNumber = AMOUNT;
-    }
-
-    // Actions the card should do.
-    @Override
-    public void use(AbstractPlayer p, AbstractMonster m) {
-        for (int i = 0; i < TIMES; i++) {
-            for (final AbstractMonster mo : AbstractDungeon.getCurrRoom().monsters.monsters) {
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(mo, p,
-                        new VulnerablePower(mo, magicNumber, false), magicNumber));
-            }
-        }
-
-    }
-
-    //Upgraded stats.
-    @Override
-    public void upgrade() {
-        if (!upgraded) {
-            upgradeName();
-            rawDescription = UPGRADE_DESCRIPTION;
-            TIMES = UPGRADE_TIMES;
-            initializeDescription();
-        }
+    init {
+        magicNumber = AMOUNT
+        baseMagicNumber = magicNumber
     }
 }

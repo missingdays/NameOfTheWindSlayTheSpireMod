@@ -1,10 +1,15 @@
-package nameOfTheWindMod.util;
+package nameOfTheWindMod.util
 
-public class IDCheckDontTouchPls {
-    public String DEFAULTID;
-    public String DEVID;
-    public String EXCEPTION;
-    public String PACKAGE_EXCEPTION;
-    public String RESOURCE_FOLDER_EXCEPTION;
-    public String RESOURCES;
+class IDCheckDontTouchPls {
+    @JvmField
+    var DEFAULTID: String? = null
+    @JvmField
+    var DEVID: String? = null
+    @JvmField
+    var EXCEPTION: String? = null
+    @JvmField
+    var PACKAGE_EXCEPTION: String? = null
+    @JvmField
+    var RESOURCE_FOLDER_EXCEPTION: String? = null
+    var RESOURCES: String? = null
 }

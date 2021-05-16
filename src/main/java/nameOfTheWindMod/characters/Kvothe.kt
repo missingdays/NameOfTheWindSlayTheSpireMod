@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer
 import com.megacrit.cardcrawl.core.CardCrawlGame
 import com.megacrit.cardcrawl.core.EnergyManager
 import com.megacrit.cardcrawl.core.Settings
-import com.megacrit.cardcrawl.helpers.CardLibrary
 import com.megacrit.cardcrawl.helpers.CardLibrary.LibraryType
 import com.megacrit.cardcrawl.helpers.FontHelper
 import com.megacrit.cardcrawl.helpers.ScreenShake
@@ -31,9 +30,9 @@ import org.apache.logging.log4j.LogManager
 //All text (starting description and loadout, anything labeled TEXT[]) can be found in DefaultMod-character-Strings.json in the resources
 class Kvothe(name: String?, setClass: PlayerClass?) : CustomPlayer(
     name, setClass, orbTextures,
-    "nameOfTheWindModResources/images/char/defaultCharacter/orb/vfx.png", null,
+    "nameOfTheWindModResources/images/char/kvothe/orb/vfx.png", null,
     SpriterAnimation(
-        "nameOfTheWindModResources/images/char/defaultCharacter/Spriter/theDefaultAnimation.scml"
+        "nameOfTheWindModResources/images/char/kvothe/Spriter/theDefaultAnimation.scml"
     )
 ) {
     // =============== CHARACTER ENUMERATORS =================
@@ -214,17 +213,17 @@ class Kvothe(name: String?, setClass: PlayerClass?) : CustomPlayer(
         // =============== /STRINGS/ =================
         // =============== TEXTURES OF BIG ENERGY ORB ===============
         val orbTextures = arrayOf(
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer1.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer2.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer3.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer4.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer5.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer6.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer1d.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer2d.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer3d.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer4d.png",
-            "nameOfTheWindModResources/images/char/defaultCharacter/orb/layer5d.png"
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer1.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer2.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer3.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer4.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer5.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer6.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer1d.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer2d.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer3d.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer4d.png",
+            "nameOfTheWindModResources/images/char/kvothe/orb/layer5d.png"
         )
     }
 

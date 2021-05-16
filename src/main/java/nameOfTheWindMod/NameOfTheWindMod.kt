@@ -316,16 +316,16 @@ class NameOfTheWindMod : EditCardsSubscriber, EditRelicsSubscriber, EditStringsS
         private const val THE_DEFAULT_BUTTON = "nameOfTheWindModResources/images/charSelect/DefaultCharacterButton.png"
         private const val THE_DEFAULT_PORTRAIT =
             "nameOfTheWindModResources/images/charSelect/DefaultCharacterPortraitBG.png"
-        const val THE_DEFAULT_SHOULDER_1 = "nameOfTheWindModResources/images/char/defaultCharacter/shoulder.png"
-        const val THE_DEFAULT_SHOULDER_2 = "nameOfTheWindModResources/images/char/defaultCharacter/shoulder2.png"
-        const val THE_DEFAULT_CORPSE = "nameOfTheWindModResources/images/char/defaultCharacter/corpse.png"
+        const val THE_DEFAULT_SHOULDER_1 = "nameOfTheWindModResources/images/char/kvothe/shoulder.png"
+        const val THE_DEFAULT_SHOULDER_2 = "nameOfTheWindModResources/images/char/kvothe/shoulder2.png"
+        const val THE_DEFAULT_CORPSE = "nameOfTheWindModResources/images/char/kvothe/corpse.png"
 
         //Mod Badge - A small icon that appears in the mod settings menu next to your mod.
         const val BADGE_IMAGE = "nameOfTheWindModResources/images/Badge.png"
 
         // Atlas and JSON files for the Animations
-        const val THE_DEFAULT_SKELETON_ATLAS = "nameOfTheWindModResources/images/char/defaultCharacter/skeleton.atlas"
-        const val THE_DEFAULT_SKELETON_JSON = "nameOfTheWindModResources/images/char/defaultCharacter/skeleton.json"
+        const val THE_DEFAULT_SKELETON_ATLAS = "nameOfTheWindModResources/images/char/kvothe/skeleton.atlas"
+        const val THE_DEFAULT_SKELETON_JSON = "nameOfTheWindModResources/images/char/kvothe/skeleton.json"
 
         // =============== MAKE IMAGE PATHS =================
         fun makeCardPath(resourcePath: String): String {

@@ -10,6 +10,10 @@ import nameOfTheWindMod.NameOfTheWindMod
 import nameOfTheWindMod.characters.Kvothe
 
 class ChaelSkill : AbstractDynamicCard(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET) {
+    init {
+        exhaust = true
+    }
+
     override fun use(p: AbstractPlayer?, m: AbstractMonster?) {
         AbstractDungeon.actionManager.addToBottom(MakeTempCardInDrawPileAction(FinolSkill(), 1, true, true))
     }

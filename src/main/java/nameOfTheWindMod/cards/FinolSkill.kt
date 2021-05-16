@@ -1,5 +1,6 @@
 package nameOfTheWindMod.cards
 
+import com.megacrit.cardcrawl.actions.common.ExhaustAction
 import com.megacrit.cardcrawl.actions.common.GainBlockAction
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction
 import com.megacrit.cardcrawl.actions.unique.AddCardToDeckAction
@@ -10,6 +11,10 @@ import nameOfTheWindMod.NameOfTheWindMod
 import nameOfTheWindMod.characters.Kvothe
 
 class FinolSkill : AbstractDynamicCard(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET) {
+    init {
+        exhaust = true
+    }
+
     override fun use(p: AbstractPlayer?, m: AbstractMonster?) {
         AbstractDungeon.actionManager.addToBottom(MakeTempCardInDrawPileAction(SaikereAttack(), 1, true, true))
     }
